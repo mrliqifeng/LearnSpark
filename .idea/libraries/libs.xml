@@ -1,0 +1,13 @@
+<component name="libraryTable">
+  <library name="libs">
+    <CLASSES>
+      <root url="file://D:/Work/Bigdata/kafka/libs" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="file://D:/Work/Bigdata/kafka/libs" />
+    </SOURCES>
+    <jarDirectory url="file://D:/Work/Bigdata/kafka/libs" recursive="false" />
+    <jarDirectory url="file://D:/Work/Bigdata/kafka/libs" recursive="false" type="SOURCES" />
+  </library>
+</component>
