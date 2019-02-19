@@ -8,7 +8,17 @@ object First {
     Logger.getLogger("org").setLevel(Level.ERROR)
     val sparkConf = new SparkConf().setMaster("local").setAppName("First")
     val sc:SparkContext = SparkContext.getOrCreate(sparkConf)
-    te2(sc)
+//    createPair(sc)
+    var map:Map[String,String] = Map()
+    map += ("one"->"one")
+    map += ("two"->"two")
+    map += ("three"->"three")
+    map += ("four"->"four")
+    var array = map.toArray
+    val arr = sc.parallelize(array)
+    val li = sc.parallelize(List(1,1,2,3,3,4))
+    val ll = li.map(line=>(line.toString,1))
+    val ii = sc.parallelize(List((1,1),(2,1),(3,1),(2,1)))
   }
 
   /**
@@ -52,5 +62,11 @@ object First {
       (par1, par2) => (par1._1+par2._1, par1._2+par2._2)
     )
     println(data2)
+  }
+
+  def createPair(sc:SparkContext):Unit={
+    val pairs = sc.parallelize(Array("Hello world","Hello liqifeng","Nihao wuyachen"))
+    val pair2 = pairs.map(line => (line.split(" ")(0),line))
+    pair2.foreach(println)
   }
 }
