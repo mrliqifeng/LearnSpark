@@ -19,6 +19,7 @@ object First {
     val li = sc.parallelize(List(1,1,2,3,3,4))
     val ll = li.map(line=>(line.toString,1))
     val ii = sc.parallelize(List((1,1),(2,1),(3,1),(2,1)))
+
   }
 
   /**
