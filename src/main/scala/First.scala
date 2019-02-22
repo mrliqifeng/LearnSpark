@@ -1,14 +1,47 @@
+import java.io.StringReader
 import java.util
 
+import com.opencsv.CSVReader
 import org.apache.spark.{SparkConf, SparkContext}
 import org.apache.log4j.{Level, Logger}
-import org.apache.spark.rdd.RDD
+import org.apache.spark.rdd.{PairRDDFunctions, RDD}
 object First {
   def main(args: Array[String]): Unit = {
     Logger.getLogger("org").setLevel(Level.ERROR)
     val sparkConf = new SparkConf().setMaster("local").setAppName("First")
     val sc:SparkContext = SparkContext.getOrCreate(sparkConf)
-//    createPair(sc)
+    csvTest(sc)
+  }
+
+  def junFile(sc:SparkContext):Unit={
+    val input = sc.wholeTextFiles("D:/Learn")
+    val resu = input.map{case(x,y)=>
+        val re = y.replace("\r\n"," ").split(" ").map(line=>line.toDouble)
+      (x,re.sum/re.length.toDouble)
+    }
+    resu.foreach(println)
+  }
+
+  def csvTest(sc:SparkContext):Unit={
+    val input = sc.textFile("D:\\QMDownload\\a_douban.csv")
+    val result = input.map{line=>
+      val reader = new CSVReader(new StringReader(line))
+      reader.readNext()
+    }
+    result.foreach{line=>
+      line.foreach(lin=>print(lin+","))
+      println()
+    }
+  }
+
+  def reByKey(sc:SparkContext):Unit={
+    val chu = sc.parallelize(List(("li",1),("qi",2),("li",2),("fen",2),("qi",2)))
+    val jun = chu.mapValues(x=>(x,1)).reduceByKey((x,y)=>(x._1+y._1,x._2+y._2))
+//    jun.foreach(println)
+    chu.collect().foreach(println)
+  }
+
+  def pairTest(sc:SparkContext):Unit={
     var map:Map[String,String] = Map()
     map += ("one"->"one")
     map += ("two"->"two")
@@ -19,7 +52,10 @@ object First {
     val li = sc.parallelize(List(1,1,2,3,3,4))
     val ll = li.map(line=>(line.toString,1))
     val ii = sc.parallelize(List((1,1),(2,1),(3,1),(2,1)))
-
+    val ii2 = ii.map{case(x,y)=>(y.toString,1)}
+    val joi = ll.join(ii2)
+    joi.cogroup(ii2).foreach(println)
+    val fil = ll.filter{case(_,y)=> y>1}
   }
 
   /**
@@ -63,11 +99,5 @@ object First {
       (par1, par2) => (par1._1+par2._1, par1._2+par2._2)
     )
     println(data2)
-  }
-
-  def createPair(sc:SparkContext):Unit={
-    val pairs = sc.parallelize(Array("Hello world","Hello liqifeng","Nihao wuyachen"))
-    val pair2 = pairs.map(line => (line.split(" ")(0),line))
-    pair2.foreach(println)
   }
 }
