@@ -41,7 +41,7 @@ public class XiapuProducer {
      * @param msg 待发送的用户行为数据，格式为JSON格式，使用时需将JSON对象转化为String对象
      */
     public void send(String msg){
-        final ProducerRecord<String, String>record = new ProducerRecord<String, String>("xiapu_test2",msg);
+        final ProducerRecord<String, String>record = new ProducerRecord<String, String>("spark",msg);
         //发送消息，并且调用回调函数，并对返回的偏移量信息进行操作
         producer.send(record, new Callback() {
                     @Override
@@ -75,7 +75,7 @@ public class XiapuProducer {
                 json.put("uuid",String.format("uuid%d",i));
                 xiapuProducer.send(json.toString());
                 System.out.println(json.toString());
-                Thread.sleep(500);
+                Thread.sleep(1000);
         }
     }
 
