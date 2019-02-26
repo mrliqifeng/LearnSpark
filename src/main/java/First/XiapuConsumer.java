@@ -1,6 +1,6 @@
 package First;
 
-import net.sf.json.JSONObject;
+import com.alibaba.fastjson.JSONObject;
 import org.apache.kafka.clients.consumer.*;
 import org.apache.log4j.Logger;
 
@@ -29,7 +29,7 @@ public class XiapuConsumer {
             //接收消息，poll参数为连接超时时间
             ConsumerRecords<String, String> records = consumer.poll(6000);
             for(ConsumerRecord<String, String> record:records){
-                JSONObject jsonObject = JSONObject.fromObject(record.value());
+                JSONObject jsonObject = JSONObject.parseObject(record.value());
                 //如果写入Hbase成功，则手动提交偏移量
                 consumer.commitAsync();
                 System.out.println(String.format("record-info:%s-%d-%d, writes to Hbase successfully, value is %s", record.topic(),record.partition(), record.offset(), record.value()));
