@@ -1,4 +1,5 @@
 import java.io.StringReader
+import java.sql.DriverManager
 import java.util
 
 import com.opencsv.CSVReader
@@ -7,10 +8,20 @@ import org.apache.log4j.{Level, Logger}
 import org.apache.spark.rdd.{PairRDDFunctions, RDD}
 object First {
   def main(args: Array[String]): Unit = {
-    Logger.getLogger("org").setLevel(Level.ERROR)
-    val sparkConf = new SparkConf().setMaster("local").setAppName("First")
-    val sc:SparkContext = SparkContext.getOrCreate(sparkConf)
-    csvTest(sc)
+//    Logger.getLogger("org").setLevel(Level.ERROR)
+//    val sparkConf = new SparkConf().setMaster("local").setAppName("First")
+//    val sc:SparkContext = SparkContext.getOrCreate(sparkConf)
+//    csvTest(sc)
+    var map:Map[String,String] = Map()
+    insertMap(map)
+  }
+  def insertMap(map:Map[String,String]):Unit={
+    var conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/scrapy?serverTimezone=GMT", "root", "000000")
+    var ps = conn.prepareStatement("insert into users(username,pwd) values (?,?)")
+    ps.setString(1,"liqifeng")
+    ps.setString(2,"liqifeng")
+    ps.execute()
+
   }
 
   def junFile(sc:SparkContext):Unit={
