@@ -1,9 +1,6 @@
 import org.apache.log4j.{Level, Logger}
 import org.apache.spark.SparkContext
 import org.apache.spark.sql.SparkSession
-
-
-
 case class Person(name:String,age:Int){
 
 }
@@ -29,5 +26,4 @@ object SqlTest {
     sql.sql("select _2 from df").show()
 
   }
-
 }

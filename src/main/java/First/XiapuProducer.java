@@ -1,6 +1,5 @@
 package First;
 
-import net.sf.json.JSONObject;
 import org.apache.kafka.clients.producer.*;
 import org.apache.log4j.Logger;
 
@@ -65,18 +64,18 @@ public class XiapuProducer {
     }
 
     public static void main(String[] args) throws InterruptedException {
-        System.out.println("lll");
-        XiapuProducer xiapuProducer = XiapuProducer.getInstance();
-        System.out.println("lll2");
-        String result = "{\"uuid\":\"uuid\",\"header\":{\"produceTime\":1644622393585,\"sendTime\":1544622393599,\"systemName\":\"xiapu\",\"serverIp\":\"192.168.0.1\",\"clientIp\":\"192.168.7.34\",\"userId\":\"liqifeng\",\"userType\":\"student\"},\"body\":{\"eventType\":\"pc\",\"eventName\":\"login\",\"num\":\"1\"}}";//,"resourceName":"古典文学.txt"
-        JSONObject json = JSONObject.fromObject(result);
-            for(int i=31000;i<32000;i++){
-//                log.info(json);
-                json.put("uuid",String.format("uuid%d",i));
-                xiapuProducer.send(json.toString());
-                System.out.println(json.toString());
-                Thread.sleep(1000);
-        }
+//        System.out.println("lll");
+//        XiapuProducer xiapuProducer = XiapuProducer.getInstance();
+//        System.out.println("lll2");
+//        String result = "{\"uuid\":\"uuid\",\"header\":{\"produceTime\":1644622393585,\"sendTime\":1544622393599,\"systemName\":\"xiapu\",\"serverIp\":\"192.168.0.1\",\"clientIp\":\"192.168.7.34\",\"userId\":\"liqifeng\",\"userType\":\"student\"},\"body\":{\"eventType\":\"pc\",\"eventName\":\"login\",\"num\":\"1\"}}";//,"resourceName":"古典文学.txt"
+//        JSONObject json = JSONObject.fromObject(result);
+//            for(int i=31000;i<32000;i++){
+////                log.info(json);
+//                json.put("uuid",String.format("uuid%d",i));
+//                xiapuProducer.send(json.toString());
+//                System.out.println(json.toString());
+//                Thread.sleep(1000);
+//        }
     }
 
 }

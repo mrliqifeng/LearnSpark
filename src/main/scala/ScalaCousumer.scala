@@ -1,6 +1,6 @@
 import java.util.{Collections, Properties}
 
-import net.sf.json.JSONObject
+import com.alibaba.fastjson.JSON
 import org.apache.kafka.clients.consumer.{Consumer, ConsumerRecords, KafkaConsumer}
 
 object ScalaCousumer {
@@ -21,7 +21,7 @@ object ScalaCousumer {
       val records = consumer.poll(6000)
       import scala.collection.JavaConversions._
       for (record <- records) {
-        val jsonObject = JSONObject.fromObject(record.value)
+        val jsonObject = JSON.parseObject(record.value)
         //如果写入Hbase成功，则手动提交偏移量
         consumer.commitAsync()
         System.out.println(record.topic+"--"+record.partition+"--"+record.offset+"--"+record.value)
